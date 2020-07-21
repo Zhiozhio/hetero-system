@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<launch>
+  <include file="$(find dolly_gazebo_worlds)/launch/start.launch">
+   <arg name="world" value="$(find dolly_gazebo_worlds)/worlds/dolly_city.world"/> 
+  </include>
+
+</launch>

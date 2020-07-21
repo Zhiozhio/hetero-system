@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<robot name="mecanum_ugv_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="mecanum_ugv_base">
+
+    <xacro:include filename="$(find mecanum_ugv_description)/urdf/base/mecanum_ugv_base.gazebo.xacro" />
+    <!-- Robot mechanical and motor parameters -->
+    <xacro:property name="PI" value="3.1415926535897931"/>
+    <xacro:property name="wheel_width" value="0.175" />
+    <xacro:property name="base_x" value="0.53"/>
+    <xacro:property name="base_y" value="0.3"/>
+    <xacro:property name="base_z" value="0.15"/>
+
+	  <!-- BASE FOOTPRINT -->
+		<link name="mecanum_ugv_base_footprint">
+		  <visual>
+			  <origin xyz="0 0 0" rpy="0 0 0" />
+			  <geometry>
+				  <box size="0.001 0.001 0.001" />
+			  </geometry>
+		  </visual>
+		</link>
+
+		<joint name="mecanum_ugv_base_footprint_joint" type="fixed">
+		  <origin xyz="0 0 0.13" rpy="0 0 0" />
+		  <parent link="mecanum_ugv_base_footprint"/>
+		  <child link="mecanum_ugv_base_link" />
+		</joint>
+
+    <!-- BASE_LINK -->
+    <link name="mecanum_ugv_base_link">
+      <inertial>
+        <mass value="125.0" />
+        <origin xyz="0 0 0" />
+        <inertia  ixx="1.391" ixy="0.004"  ixz="0.0"  iyy="6.853"  iyz="0.0"  izz="6.125" />
+      </inertial>
+
+      <visual>
+        <origin xyz="-0.27 -0.148 -0.075" rpy="1.5707 0 1.5707" />
+        <geometry>
+          <mesh filename="package://mecanum_ugv_description/meshes/base/ugv_base.dae" scale="0.0011 0.0011 0.0011"/>
+        </geometry>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0 " />
+        <geometry>
+          <box size="${base_x} ${base_y} ${base_z}"/>
+        </geometry>
+      </collision>
+
+    </link>
+
+  </xacro:macro>
+
+</robot>

@@ -1,0 +1,31 @@
+<launch>
+
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="paused" default="true"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!-- <arg name="world_name" value="$(find rrbot_gazebo)/worlds/rrbot.world"/> -->
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+
+
+  <arg name="uav_x" default="0.0"/>
+  <arg name="uav_y" default="0.0"/>
+  <arg name="uav_z" default="3.0"/>
+
+  <include file="$(find quadrotor_uav_description)/launch/spawn_uav.launch">
+    <arg name="x" value="$(arg uav_x)"/>
+    <arg name="y" value="$(arg uav_y)"/>
+    <arg name="z" value="$(arg uav_z)"/>
+  </include>
+
+</launch>

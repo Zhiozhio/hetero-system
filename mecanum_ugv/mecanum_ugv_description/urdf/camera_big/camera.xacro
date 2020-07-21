@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<robot name="ugv_camera" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Constants for robot dimensions -->
+  <xacro:property name="PI" value="3.1415926535897931"/>
+
+  <xacro:macro name="ugv_camera">
+    
+    <xacro:include filename="$(find mecanum_ugv_description)/urdf/camera/camera.gazebo.xacro" />
+
+    <joint name="ugv_base_camera_joint" type="fixed">
+      <origin xyz="0.44 0 0.35" rpy="0 0 0" />
+      <parent link="mecanum_ugv_base_footprint"/>
+      <child  link="ugv_camera_link" />
+    </joint>
+
+    <link name="ugv_camera_link">
+
+      <inertial>
+        <mass value="1.0" />
+        <origin xyz="0 0 0" />
+        <inertia  ixx="0.01" ixy="0.0"  ixz="0.0"  iyy="0.04"  iyz="0.0"  izz="0.04" />
+      </inertial>
+        
+        <visual>
+          <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>
+            <box size="0.05 0.03 0.03" />
+          </geometry>
+          <material name="black">
+            <color rgba="0.0 0.0 0.0 1.0"/>
+          </material>
+        </visual>
+        
+        <collision>
+          <origin xyz="0 0 0" rpy="0 0 0 " />
+          <geometry>
+            <box size="0.05 0.03 0.03"/>
+          </geometry>
+        </collision>
+    </link>
+
+    <!-- generate an optical frame http://www.ros.org/reps/rep-0103.html#suffix-frames
+      so that ros and opencv can operate on the camera frame correctly -->
+    <joint name="camera_optical_joint" type="fixed">
+        <!-- these values have to be these values otherwise the gazebo camera image
+            won't be aligned properly with the frame it is supposedly originating from -->
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+        <parent link="ugv_camera_link"/>
+        <child link="camera_link_optical"/>
+    </joint>
+
+    <link name="camera_link_optical">
+    </link>
+
+  </xacro:macro>
+
+</robot>

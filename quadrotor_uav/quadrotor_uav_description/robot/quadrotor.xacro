@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<robot name="quadrotor_uav" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find quadrotor_uav_description)/urdf/quadrotor_base.urdf.xacro" />
+    <xacro:include filename="$(find quadrotor_uav_description)/urdf/downward_camera/camera.xacro" />
+
+    <xacro:macro name="uav_robot">
+        <xacro:quadrotor_base_macro />
+        <xacro:fly_control />
+        <xacro:odometry_pub />
+        <xacro:downward_camera />
+    </xacro:macro>
+
+   <xacro:uav_robot/>
+
+</robot>
+

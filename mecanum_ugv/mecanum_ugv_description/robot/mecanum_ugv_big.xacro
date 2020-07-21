@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<robot name="mecanum_ugv" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!-- Import mecanum UGV wheels -->
+	<xacro:include filename="$(find mecanum_ugv_description)/urdf/wheels_big/omni_wheel.urdf.xacro" />
+	<xacro:include filename="$(find mecanum_ugv_description)/urdf/base_big/mecanum_ugv_base.urdf.xacro" />
+	<xacro:include filename="$(find mecanum_ugv_description)/urdf/camera_big/camera.xacro"/>
+
+	<!-- Wheel parameters -->
+	<xacro:property name="wheel_offset_x" value="0.32" />    <!-- x,y,z in translation from base_link to the center of the wheel -->
+	<xacro:property name="wheel_offset_y" value="0.302" />
+	<xacro:property name="wheel_offset_z" value="-0.095" />
+
+	<xacro:macro name="robot">
+		<xacro:mecanum_ugv_base/>
+
+		<xacro:omni_wheel prefix="ugv_front_right" parent="mecanum_ugv_base_link" reflect="false">
+			<origin xyz="${wheel_offset_x} -${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
+		</xacro:omni_wheel>
+
+		<xacro:omni_wheel prefix="ugv_front_left" parent="mecanum_ugv_base_link" reflect="true">
+			<origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
+		</xacro:omni_wheel>
+
+		<xacro:omni_wheel prefix="ugv_back_left" parent="mecanum_ugv_base_link" reflect="true">
+			<origin xyz="-${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
+		</xacro:omni_wheel>
+
+		<xacro:omni_wheel prefix="ugv_back_right" parent="mecanum_ugv_base_link" reflect="false">
+			<origin xyz="-${wheel_offset_x} -${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
+		</xacro:omni_wheel>
+
+		<xacro:omni_steering/>
+
+		<xacro:odometry_pub/>
+		
+		<xacro:ugv_camera/>
+
+   </xacro:macro>
+
+   <xacro:robot/>
+
+</robot>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="omni_steering" params="">
+	<gazebo>
+	  <plugin name="omni_steering" filename="libgazebo_ros_force_based_omni_move.so">
+	    <cmd_vel_topic>cmd_vel</cmd_vel_topic>
+	    <odom_topic>odom</odom_topic>
+	    <odom_frame>odom</odom_frame>
+	    <odom_rate>50.0</odom_rate>
+	    <robot_base_frame>mecanum_ugv_base_footprint</robot_base_frame>
+            <robot_namespace>ugv</robot_namespace>
+	    <publish_odom_tf>true</publish_odom_tf>
+	  </plugin>
+	</gazebo>
+  </xacro:macro>
+
+</robot>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<launch>
+  <include file="$(find autoware_worlds)/launch/start.launch">
+   <arg name="world" value="$(find autoware_worlds)/worlds/autoware.world"/> 
+  </include>
+
+</launch>

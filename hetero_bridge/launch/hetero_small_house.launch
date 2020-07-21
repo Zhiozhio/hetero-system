@@ -1,0 +1,57 @@
+<launch>
+
+
+    <arg name="paused" default="true"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+    <arg name="world_name" default="$(find aws_robomaker_worlds)/worlds/small_house.world"/>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(arg world_name)"/>
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="headless" value="$(arg headless)"/>
+        <arg name="debug" value="$(arg debug)"/>
+    </include>
+
+<group ns="ugv">
+    <arg name="ugv_name" default="ugv"/>
+    <arg name="ugv_x" default="-8.0"/>
+    <arg name="ugv_y" default="-3.0"/>
+    <arg name="ugv_z" default="0.0"/>
+
+    <include file="$(find mecanum_ugv_description)/launch/spawn_ugv.launch">
+        <arg name="name" value="$(arg ugv_name)"/>
+        <arg name="x" value="$(arg ugv_x)"/>
+        <arg name="y" value="$(arg ugv_y)"/>
+        <arg name="z" value="$(arg ugv_z)"/>
+    </include>
+</group>
+
+<group ns="uav">
+    <arg name="uav_name" default="uav"/>
+    <arg name="uav_x" default="-8.0"/>
+    <arg name="uav_y" default="-3.0"/>
+    <arg name="uav_z" default="0.58"/> <!-- 0.35+0.23 -->
+
+    <include file="$(find quadrotor_uav_description)/launch/spawn_uav.launch">
+        <arg name="name" value="$(arg uav_name)"/>
+        <arg name="x" value="$(arg uav_x)"/>
+        <arg name="y" value="$(arg uav_y)"/>
+        <arg name="z" value="$(arg uav_z)"/>
+    </include>
+</group>
+
+    <!-- This node uses the ground truth of position information from simulator -->
+    <!--  ///\args: XYPid ZPid RollPitchPid YawPid (each for a 3d vector) -->
+    <node name="uav_ugv_bridge" pkg="hetero_bridge" type="uav_ugv_bridge"
+          args="">
+        <remap from="/ugv/pose" to="/ugv/odometry"/>
+        <remap from="/uav/pose" to="/uav/odometry"/>
+        <!--<remap from="/uav/cmd_force" to="/uav/cmd_force"/>-->
+    </node>
+
+</launch>

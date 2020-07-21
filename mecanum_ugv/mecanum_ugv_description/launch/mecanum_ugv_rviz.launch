@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Load the URDF into ROS parameter server -->
+  <param name="robot_description" command="$(find xacro)/xacro '$(find mecanum_ugv_description)/robot/mecanum_ugv.xacro' --inorder" />
+
+  <!-- Publish joint values -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
+  <!-- convert joint states to TF transforms for rviz, etc  -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+
+  <!-- Show in Rviz   -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mecanum_ugv_description)/config/config.rviz"/>
+
+</launch>

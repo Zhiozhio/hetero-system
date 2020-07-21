@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="fly_control" params="">
+	<gazebo>
+	  <plugin name="fly_control" filename="libgazebo_ros_simple_fly_control.so">
+	    <topicName>cmd_force</topicName>
+            <bodyName>base_link</bodyName>
+            <robotNamespace>uav</robotNamespace>
+            <publish_tf>true</publish_tf>
+	  </plugin>
+	</gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="odometry_pub" params="">
+	<gazebo>
+	  <plugin name="pose3d" filename="libgazebo_ros_p3d.so">
+            <!-- even the gaussianNoise is not 0,
+                   the odometry pose part is still ground truth -->
+	    <topicName>odometry</topicName>
+            <gaussianNoise>0</gaussianNoise>
+            <bodyName>base_link</bodyName>
+            <robotNamespace>uav</robotNamespace>
+	  </plugin>
+	</gazebo>
+  </xacro:macro>
+
+</robot>

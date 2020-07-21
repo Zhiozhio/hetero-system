@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="omni_steering" params="">
+	<gazebo>
+	  <plugin name="omni_steering" filename="libgazebo_ros_force_planer_move.so">
+	    <topicName>cmd_force</topicName>
+	    <odom_rate>-1</odom_rate> <!-- set as negative to stop publish odom -->
+	    <bodyName>mecanum_ugv_base_footprint</bodyName>
+            <robotNamespace>ugv</robotNamespace>
+	  </plugin>
+	</gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="odometry_pub" params="">
+  	<gazebo>
+  	  <plugin name="ground_truth_odom" filename="libgazebo_ros_ground_truth_odom.so">
+              <!-- even the gaussianNoise is not 0,
+                     the odometry pose part is still ground truth -->
+  	    <topicName>odometry</topicName>
+              <gaussianNoise>0</gaussianNoise>
+              <bodyName>mecanum_ugv_base_footprint</bodyName>
+              <robotNamespace>ugv</robotNamespace>
+  	  </plugin>
+  	</gazebo>
+   </xacro:macro>
+
+</robot>

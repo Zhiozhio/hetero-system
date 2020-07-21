@@ -1,0 +1,12 @@
+<launch>
+
+    <!-- run hetero-system manipulate node -->
+    <node name="hetero_manipulator" pkg="hetero_bridge" type="hetero_manipulator"/>
+
+    <!-- run teleop twist control node -->
+    <node name="hetero_twist_teleop" pkg="hetero_teleop_twist" type="teleop_twist_keyboard.py"
+     output="screen">
+        <remap from="/cmd_vel" to="/ugv/cmd_vel"/>
+    </node>
+    
+</launch>
